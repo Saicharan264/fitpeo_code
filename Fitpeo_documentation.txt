@@ -1,0 +1,23 @@
+Prerequisites:
+1) Java Development Kit (JDK)
+Ensure you have JDK installed. You can download it from the Oracle JDK download page.
+Set up the JAVA_HOME environment variable and add JAVA_HOME/bin to the PATH.
+
+2) Maven
+Install Maven, a build automation tool used primarily for Java projects.
+You can download it from the Maven download page.
+Set up the MAVEN_HOME environment variable and add MAVEN_HOME/bin to the PATH.
+
+3) IDE
+Use an Integrated Development Environment (IDE) such as IntelliJ IDEA, Eclipse, or VSCode for Java.
+
+Step-by-Step Guide:
+1) Set Up of Project
+   Open your IDE and create a new Maven project.
+
+2)Create the Java Class
+  Create a new Java class named Main1 in the src/main/java directory and write the script:
+
+3)Run the Script
+  In the IDE, run the main method in the Main1 class.
+  This will launch the Chrome browser and execute the steps defined in the given script.

@@ -1,0 +1,92 @@
+package com.selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Main1 {
+	
+	public static void main(String []args) throws InterruptedException {
+		
+		Main1 m=new Main1();
+		m.launchBrowser();
+		m.handlingSliding();
+		m.scrollDown();
+		//m.adjustSlideByenteringValue();
+		m.slidingToSpecificValue();
+		m.clickOnCheckBox();
+		//m.tearDown();
+	}
+	
+
+	
+
+WebDriver driver;
+    //@BeforeTest
+	public void launchBrowser() {
+	   WebDriverManager.chromedriver().setup();
+		driver=new ChromeDriver();
+		driver.get("https://fitpeo.com/");
+		driver.manage().window().maximize();
+	}
+    //@Test(priority=2)
+    public void  scrollDown() {
+    	JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,1000)", "");
+    }
+	//@Test(priority=1)
+	public void handlingSliding() throws InterruptedException {
+		driver.findElement(By.xpath("//div[text()='Revenue Calculator']")).click();
+		Thread.sleep(5000);
+	}
+	//@Test(priority=4,alwaysRun=false)
+	public void slidingToSpecificValue() throws InterruptedException {
+	    WebElement slider = driver.findElement(By.xpath("//span[@class='MuiSlider-thumb MuiSlider-thumbSizeMedium MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeMedium MuiSlider-thumbColorPrimary css-sy3s50']"));
+	    System.out.println(slider.getLocation());
+	    int x=slider.getLocation().getX();
+	    int y=slider.getLocation().getY();
+	    System.out.println(slider.getSize());
+	    Actions act=new Actions(driver);
+	    act.dragAndDropBy(slider, 94,0).perform();
+	    Thread.sleep(3000);
+	    WebElement element=driver.findElement(By.xpath("//input[@id=':r0:']"));
+	     String value=element.getAttribute("value");
+	     System.out.println(value);
+	     if(value.equals("823")) {
+	    	 System.out.println("Selected slided value");
+	    	 
+	     }
+	}
+	//@Test(priority=3)
+	public void adjustSlideByenteringValue() throws InterruptedException {
+		driver.findElement(By.xpath("//input[@id=':r0:']")).clear();
+	    driver.findElement(By.xpath("//input[@id=':r0:']")).sendKeys("560");
+	    Thread.sleep(5000);
+}
+	
+	public void clickOnCheckBox() {
+		driver.findElement(By.xpath("(//input[@class='PrivateSwitchBase-input css-1m9pwf3'])[1]")).click();
+		driver.findElement(By.xpath("(//input[@class='PrivateSwitchBase-input css-1m9pwf3'])[2]")).click();
+		driver.findElement(By.xpath("(//input[@class='PrivateSwitchBase-input css-1m9pwf3'])[3]")).click();
+		driver.findElement(By.xpath("(//input[@class='PrivateSwitchBase-input css-1m9pwf3'])[8]")).click();
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(1000,0)", "");
+		WebElement element=driver.findElement(By.xpath("//p[@class='MuiTypography-root MuiTypography-body1 inter css-12bch19'][normalize-space()='$111105']"));
+		String finalValue=element.getText();
+		if(finalValue.equals("$111105")) {
+			System.out.println("Getting expected value");
+		}else {
+			System.out.println("not Getting expected value");
+		}
+	}
+	
+	//@AfterTest
+public void tearDown() {
+	driver.close();
+}
+}
